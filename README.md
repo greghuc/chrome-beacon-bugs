@@ -28,7 +28,7 @@ The first web request is the demo-page loaded in a Chrome tab. The second web re
 
 Note that the tabId+frameId of the beacon call (-1 and -2) do not match that of the web-page call (57 and 0). This is the bug.
 
-The same problem can be seen when a 'beacon'-style web-request is made using the window.onunload img.src hack. We load chrome-extension://INSERT-EXTENSIONID-HERE/beacon-test.html and saw:
+The same problem can be seen when a 'beacon'-style web-request is made using the window.onunload img.src hack. We loaded chrome-extension://INSERT-EXTENSIONID-HERE/beacon-test.html and saw:
 ```
 Seen web request for: chrome-extension://empbiabaidecimmlofaoeafoefnfnmae/onunload-beacon-test.html
 tabId=[68] frameId=[0]
