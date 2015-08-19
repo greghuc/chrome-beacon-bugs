@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<p>
+<h1>Demonstration of Chrome sendBeacon bug</h1>
+<h2>Overview</h2>
+<p>This page demonstrates the following Chrome bug:
+    <a href="https://code.google.com/p/chromium/issues/detail?id=522124">navigator.sendBeacon web requests should be accounted to the originating frame(id)</a></p>
+<p>The page does this by making a navigator.sendBeacon web request.</p>
+<p>The extension is intercepting all observed web requests with the chrome.webRequest API, and logging details to the extension's console.</p>
+<p>By reviewing the extension's console, you should see a web-request (and associated tabId / frameId) for:
+ <ol>
+    <li>This web page: chrome-extension://this-extensions-id/beacon-test.html. The tabId and frameId logged will both be >= 0 (valid)</li>
+    <li>The sendBeacon call (random wikipedia image): https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Apuleuis.jpg/1280px-Apuleuis.jpg. The tabId and frameId logged will likely be -1 and -2 respectively.</li>
+</ol>
+The bug is that the tabId/frameId of the sendBeacon call do not match the tabId/frameId of the web-page that made the call.
+</p>
+<h2>Replicating the bug</h2>
+<p>To replicate the bug:
+<ol>
+    <li>Open the extension's background console and clear it</li>
+    <li>Open this page, and watch the extension console for details of the page web-request and sendBeacon web-request</li>
+    <li>Note that the tabId/frameIDs of the two web requests do not match</li>
+</ol>
+</p>
+<script src="/js/send-beacon.js"></script>
+</body>
+</html>

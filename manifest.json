@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+
+    "name": "Beacon/onunload bug extension",
+    "description": "This extension demonstrates two related Chrome bugs - 'beacon'/onunload web requests are not accounted to original frame(id)",
+    "version": "0.1",
+    "background": {
+        "scripts": ["js/background.js"]
+    },
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

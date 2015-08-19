@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<p>
+<h1>Demonstration of Chrome window.onunload 'beacon' bug</h1>
+<h2>Overview</h2>
+<p>This page demonstrates the following Chrome bug:
+    <a href="https://code.google.com/p/chromium/issues/detail?id=522129">window.onunload 'beacon' web requests should be accounted to the originating frame(id)</a></p>
+<p>The page does this with a window.onunload listener that makes a 'beacon'-style web-request using the img.src hack.
+    The 'beacon' web-request is only made when this page is unloaded (i.e. when this window starts loading another web page).</p>
+<p>The extension is intercepting all observed web requests with the chrome.webRequest API, and logging details to the extension's console.</p>
+<p>By reviewing the extension's console, you should see a web-request (and associated tabId / frameId) for:
+<ol>
+    <li>This web page: chrome-extension://this-extensions-id/onunload-beacon-test.html. The tabId and frameId logged will both be >= 0 (valid)</li>
+    <li>When this web-page unloads, the window.onunload 'beacon' img.src call (to random wikipedia image): https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Apuleuis.jpg/1280px-Apuleuis.jpg. The tabId and frameId logged will likely be -1 and -2 respectively.</li>
+</ol>
+The bug is that the tabId/frameId of the window.onunload 'beacon' img.src call do not match the tabId/frameId of the web-page that made the call.
+</p>
+<h2>Replicating the bug</h2>
+<p>To replicate the bug:
+<ol>
+    <li>Open the extension's background console and clear it</li>
+    <li>Open this page, and watch the extension console for details of the page web-request</li>
+    <li>Trigger the unloading of this page by clicking <a href="/another-page.html">here</a>. This will trigger the window.onunload 'beacon' img.src web-request</li>
+    <li>Note that the tabId/frameIDs of the two web requests do not match</li>
+</ol>
+</p>
+<script src="/js/send-onunload-beacon.js"></script>
+</body>
+</html>
